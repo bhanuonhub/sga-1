@@ -1,0 +1,42 @@
+Q3 - File System and Link Analysis Report
+========================================
+
+Commands executed:
+1. rm -f original.txt hardlink.txt symlink.txt
+2. echo "Linux link test file" > original.txt
+3. ln original.txt hardlink.txt
+4. ln -s original.txt symlink.txt
+5. ls -li original.txt hardlink.txt symlink.txt
+6. stat original.txt hardlink.txt symlink.txt
+7. rm original.txt
+8. ls -li hardlink.txt symlink.txt
+9. cat hardlink.txt
+10. cat symlink.txt
+
+Outputs:
+$ ls -li original.txt hardlink.txt symlink.txt
+1310751 -rw-rw-rw- 2 codespace codespace 21 Jul  3 16:42 hardlink.txt
+1310751 -rw-rw-rw- 2 codespace codespace 21 Jul  3 16:42 original.txt
+1310806 lrwxrwxrwx 1 codespace codespace 12 Jul  3 16:42 symlink.txt -> original.txt
+
+$ stat original.txt hardlink.txt symlink.txt
+Inode of original.txt: 1310751
+Inode of hardlink.txt: 1310751
+Inode of symlink.txt: 1310806
+
+$ rm original.txt
+$ ls -li hardlink.txt symlink.txt
+1310751 -rw-rw-rw- 1 codespace codespace 21 Jul  3 16:42 hardlink.txt
+1310806 lrwxrwxrwx 1 codespace codespace 12 Jul  3 16:42 symlink.txt -> original.txt
+
+$ cat hardlink.txt
+Linux link test file
+
+$ cat symlink.txt
+cat: symlink.txt: No such file or directory
+
+Observations:
+- The hard link and the original file share the same inode number, showing they point to the same underlying data.
+- The symbolic link has a different inode and stores the target path rather than the file contents.
+- Removing the original file does not affect the hard link, but it breaks the symbolic link because its target is gone.
+- Hard links preserve data access while symbolic links depend on the target path remaining valid.

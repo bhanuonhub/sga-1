@@ -1,0 +1,46 @@
+Q1 - Environment Verification Report
+=================================
+
+Commands executed:
+1. whoami
+2. groups
+3. echo "$SHELL"
+4. pwd
+5. ls -la
+6. curl -s --max-time 10 https://youtube.com > /dev/null && echo "youtube.com reachable"
+
+Outputs:
+$ whoami
+codespace
+
+$ groups
+codespace pipx python oryx golang docker sdkman rvm php conda nvs nvm hugo ssh
+
+$ echo "$SHELL"
+/bin/bash
+
+$ pwd
+/workspaces/sga-1
+
+$ ls -la
+total 44
+drwxrwxrwx+ 8 codespace root      4096 Jul  3 16:25 .
+drwxr-xrwx+ 5 codespace root      4096 Jul  3 15:40 ..
+drwxrwxrwx+ 8 codespace root      4096 Jul  3 16:39 .git
+-rw-rw-rw-  1 codespace root         7 Jul  3 15:40 README.md
+-rw-rw-rw-  2 codespace codespace   21 Jul  3 16:25 hardlink.txt
+-rw-rw-rw-  2 codespace codespace   21 Jul  3 16:25 original.txt
+drwxrwxrwx+ 2 codespace codespace 4096 Jul  3 16:14 q1
+drwxrwxrwx+ 3 codespace codespace 4096 Jul  3 16:21 q2
+drwxrwxrwx+ 2 codespace codespace 4096 Jul  3 16:28 q3
+drwxrwxrwx+ 2 codespace codespace 4096 Jul  3 16:31 q4
+drwxrwxrwx+ 2 codespace codespace 4096 Jul  3 16:14 q5
+
+$ curl -s --max-time 10 https://youtube.com > /dev/null && echo "youtube.com reachable"
+youtube.com reachable
+
+Observations:
+- The current user is codespace and the account belongs to multiple Linux groups.
+- The active shell is /bin/bash and the current working directory is /workspaces/sga-1.
+- The workspace contains the repository files and the five question folders.
+- Network connectivity to YouTube was confirmed successfully.

@@ -1,0 +1,36 @@
+Q4 - File Access and I/O Investigation Report
+============================================
+
+Commands executed:
+1. echo "sample log line" > app.log
+2. lsof -p $$ | head -n 20
+3. exec 3<app.log
+4. lsof -p $$ | grep 'app.log'
+5. ls -l /proc/$$/fd | grep -E '0|1|2|3|6'
+6. ls -l > stdout.txt
+7. ls /not_a_real_path 2> stderr.txt
+8. (ls -l && ls /not_a_real_path) > combined.txt 2>&1
+9. ulimit -a
+10. exec 3<&-
+
+Outputs:
+$ lsof -p $$ | grep 'app.log'
+bash    67855 codespace    3r   REG    7,4       16 1310807 /workspaces/sga-1/q4/app.log
+
+$ ls -l /proc/$$/fd | grep -E '0|1|2|3|6'
+0 -> /dev/pts/6
+1 -> /dev/pts/6
+2 -> /dev/pts/6
+3 -> /workspaces/sga-1/q4/app.log
+6 -> /dev/null
+
+$ ulimit -a
+open files                          (-n) 524288
+stack size                  (kbytes, -s) 8192
+file size                   (blocks, -f) unlimited
+
+Observations:
+- Opening file descriptor 3 for app.log shows that Linux tracks file access through descriptors.
+- Standard streams 0, 1, and 2 are connected to the terminal, while descriptor 6 points to /dev/null.
+- Output redirection captured the listing in stdout.txt, errors were captured in stderr.txt, and both streams were combined in combined.txt.
+- The shell resource limits show a high open-files limit, which supports many simultaneous file descriptors.

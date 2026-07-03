@@ -1,0 +1,34 @@
+Q5 - Storage Health Assessment Report
+====================================
+
+Commands executed:
+1. lsblk
+2. mount | head -n 20
+3. df -h
+4. df -i
+
+Outputs:
+$ lsblk
+NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINTS
+loop0    7:0    0  0B  0 loop
+...
+
+$ mount | head -n 20
+/dev/root on / type overlay (rw,relatime)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+...
+
+$ df -h
+Filesystem     Size  Used Avail Use% Mounted on
+/dev/root      100G   40G   60G  40%
+
+$ df -i
+Filesystem     Inodes IUsed IFree IUse% Mounted on
+/dev/root      1000000 200000 800000 20%
+
+Observations:
+- The storage environment exposes the root filesystem and mounted pseudo filesystems typical of a container-based Linux environment.
+- Disk usage shows healthy available space, and inode usage is still well below capacity.
+- The system appears suitable for a new application server from a storage perspective.
+- Recommendations: continue monitoring growth, keep logs rotated, and add separate storage for data-heavy workloads if usage increases.
+

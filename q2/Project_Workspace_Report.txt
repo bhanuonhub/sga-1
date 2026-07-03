@@ -1,0 +1,40 @@
+Q2 - Secure Project Workspace Setup Report
+=========================================
+
+Commands executed:
+1. mkdir -p secure_workspace/{docs,src,logs}
+2. touch secure_workspace/docs/plan.txt secure_workspace/src/app.txt secure_workspace/logs/activity.log
+3. find secure_workspace -maxdepth 2 -print | sort
+4. stat -c '%n %A %U %G' secure_workspace secure_workspace/docs secure_workspace/src secure_workspace/logs secure_workspace/docs/plan.txt secure_workspace/src/app.txt secure_workspace/logs/activity.log
+5. chmod 750 secure_workspace secure_workspace/docs secure_workspace/src secure_workspace/logs
+6. chmod 640 secure_workspace/docs/plan.txt secure_workspace/src/app.txt secure_workspace/logs/activity.log
+7. stat -c '%n %A %U %G' secure_workspace secure_workspace/docs secure_workspace/src secure_workspace/logs secure_workspace/docs/plan.txt secure_workspace/src/app.txt secure_workspace/logs/activity.log
+8. umask
+
+Outputs:
+$ find secure_workspace -maxdepth 2 -print | sort
+secure_workspace
+secure_workspace/docs
+secure_workspace/docs/plan.txt
+secure_workspace/logs
+secure_workspace/logs/activity.log
+secure_workspace/src
+secure_workspace/src/app.txt
+
+$ stat -c '%n %A %U %G' ...
+secure_workspace drwxr-x--- codespace codespace
+secure_workspace/docs drwxr-x--- codespace codespace
+secure_workspace/src drwxr-x--- codespace codespace
+secure_workspace/logs drwxr-x--- codespace codespace
+secure_workspace/docs/plan.txt -rw-r----- codespace codespace
+secure_workspace/src/app.txt -rw-r----- codespace codespace
+secure_workspace/logs/activity.log -rw-r----- codespace codespace
+
+$ umask
+0022
+
+Observations:
+- The workspace structure was created with separate directories for docs, src, and logs.
+- Permissions were tightened so the main directory is accessible to the owner and group, while files are readable only by the owner.
+- The default umask value is 0022, which helps create files with standard owner-read/write and group/other-read permissions.
+- These permissions protect project data by limiting access to authorized users and reducing accidental modification.
